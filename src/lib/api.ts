@@ -18,11 +18,7 @@ export const instanceSchema = z.object({
   region: z.string(),
   is_monitoring: z.boolean(),
   is_mock: z.boolean(),
-  cpu_capacity: z.number(),
-  memory_capacity: z.number(),
-  network_capacity: z.number(),
-  current_scale_level: z.number(),
-  created_at: z.string().optional(),
+  created_at: z.string(),
 });
 
 export const metricSchema = z.object({

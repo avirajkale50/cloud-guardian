@@ -59,17 +59,21 @@ export const DecisionsTable: React.FC<DecisionsTableProps> = ({ decisions }) => 
         <TableBody>
           {decisions.map((decision) => {
             const config = decisionConfig[decision.decision];
-            const Icon = config.icon;
-            
+            if (!config) {
+              console.warn('Unexpected decision value:', decision.decision, 'for decision:', decision);
+            }
+            const finalConfig = config || decisionConfig.no_action;
+            const Icon = finalConfig.icon;
+
             return (
               <TableRow key={decision.id} className="border-border/50">
                 <TableCell className="font-mono text-sm">
                   {format(new Date(decision.timestamp), 'MMM d, HH:mm:ss')}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={config.variant} className="gap-1">
+                  <Badge variant={finalConfig.variant} className="gap-1">
                     <Icon className="w-3 h-3" />
-                    {config.label}
+                    {finalConfig.label}
                   </Badge>
                 </TableCell>
                 <TableCell className="font-mono">

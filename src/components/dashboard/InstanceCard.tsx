@@ -2,7 +2,7 @@ import React from 'react';
 import { Instance } from '@/lib/api';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Play, Square, Trash2, Server, Activity, Cpu, HardDrive, Wifi } from 'lucide-react';
+import { Play, Square, Trash2, Server, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InstanceCardProps {
@@ -22,8 +22,6 @@ export const InstanceCard: React.FC<InstanceCardProps> = ({
   onViewMetrics,
   isLoading,
 }) => {
-  const capacityPercent = (value: number) => Math.min(100, Math.max(0, value * 100));
-
   return (
     <div className="glass-card rounded-xl p-5 space-y-4 animate-fade-in">
       {/* Header */}
@@ -58,65 +56,6 @@ export const InstanceCard: React.FC<InstanceCardProps> = ({
         </div>
       </div>
 
-      {/* Capacity indicators */}
-      <div className="grid grid-cols-3 gap-3">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Cpu className="w-3 h-3" />
-            <span>CPU</span>
-          </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-primary to-info rounded-full transition-all duration-500"
-              style={{ width: `${capacityPercent(instance.cpu_capacity)}%` }}
-            />
-          </div>
-          <p className="text-xs font-mono text-muted-foreground">
-            {(instance.cpu_capacity * 100).toFixed(0)}%
-          </p>
-        </div>
-        
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <HardDrive className="w-3 h-3" />
-            <span>Memory</span>
-          </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-success to-primary rounded-full transition-all duration-500"
-              style={{ width: `${capacityPercent(instance.memory_capacity)}%` }}
-            />
-          </div>
-          <p className="text-xs font-mono text-muted-foreground">
-            {(instance.memory_capacity * 100).toFixed(0)}%
-          </p>
-        </div>
-        
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Wifi className="w-3 h-3" />
-            <span>Network</span>
-          </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-warning to-destructive rounded-full transition-all duration-500"
-              style={{ width: `${capacityPercent(instance.network_capacity)}%` }}
-            />
-          </div>
-          <p className="text-xs font-mono text-muted-foreground">
-            {(instance.network_capacity * 100).toFixed(0)}%
-          </p>
-        </div>
-      </div>
-
-      {/* Scale level */}
-      <div className="flex items-center justify-between text-sm">
-        <span className="text-muted-foreground">Scale Level</span>
-        <span className="font-mono font-medium text-foreground">
-          Level {instance.current_scale_level}
-        </span>
-      </div>
-
       {/* Actions */}
       <div className="flex items-center gap-2 pt-2 border-t border-border/50">
         {instance.is_monitoring ? (
@@ -142,7 +81,7 @@ export const InstanceCard: React.FC<InstanceCardProps> = ({
             Start
           </Button>
         )}
-        
+
         <Button
           variant="secondary"
           size="sm"
@@ -152,7 +91,7 @@ export const InstanceCard: React.FC<InstanceCardProps> = ({
           <Activity className="w-3 h-3 mr-1.5" />
           Metrics
         </Button>
-        
+
         <Button
           variant="ghost"
           size="icon"
