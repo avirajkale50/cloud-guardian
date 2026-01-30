@@ -22,7 +22,7 @@ export const instanceSchema = z.object({
   memory_capacity: z.number(),
   network_capacity: z.number(),
   current_scale_level: z.number(),
-  created_at: z.string(),
+  created_at: z.string().optional(),
 });
 
 export const metricSchema = z.object({
@@ -85,7 +85,7 @@ const apiClient = async <T>(
   options: RequestInit = {}
 ): Promise<T> => {
   const token = getToken();
-  
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...options.headers,
